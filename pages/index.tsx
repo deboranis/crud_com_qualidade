@@ -1,4 +1,4 @@
-import { GlobalStyles } from "../src/theme/GlobalStyles"
+import { GlobalStyles } from "../src/ui/theme/GlobalStyles"
 
 const bg = "/bg.jpeg"
 export default function HomePage() {
