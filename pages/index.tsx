@@ -33,7 +33,7 @@ React.useEffect(() => {
   .then(({ todos }) => {
     setTodos(todos);
   });
-});
+}, []);
 
   return (
     <main>
