@@ -24,12 +24,13 @@ interface HomeTodo {
 }
 
 export default function HomePage() {
-let [todos, setTodos] = React.useState<HomeTodo[]>([]);
+  const [page, setPage] = React.useState(1);
+  let [todos, setTodos] = React.useState<HomeTodo[]>([]);
 // useEffect pra impedir que ele execute esse bloco toda vez que a home for renderizada
 React.useEffect(() => {
   todoController
-  .get()
-  .then(todos => {
+  .get({ page })
+  .then(({ todos }) => {
     setTodos(todos);
   });
 });
@@ -87,8 +88,8 @@ React.useEffect(() => {
                 </tr>
               );
             })}
-
-            {/* <tr>
+{/* 
+            <tr>
                  <td colSpan={4} align="center" style={{ textAlign: "center" }}>
                    Carregando...
                  </td>
@@ -98,14 +99,15 @@ React.useEffect(() => {
                  <td colSpan={4} align="center">
                    Nenhum item encontrado
                  </td>
-               </tr>
+               </tr> */}
  
                <tr>
                  <td colSpan={4} align="center" style={{ textAlign: "center" }}>
                    <button
                      data-type="load-more"
+                     onClick={() => setPage(page + 1)}
                    >
-                     Carregar mais{" "}
+                     Página {page}, Carregar mais{" "}
                      <span
                        style={{
                          display: "inline-block",
@@ -117,7 +119,7 @@ React.useEffect(() => {
                      </span>
                    </button>
                  </td>
-               </tr> */}
+               </tr>
           </tbody>
         </table>
       </section>
