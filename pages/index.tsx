@@ -24,16 +24,22 @@ interface HomeTodo {
 }
 
 export default function HomePage() {
+  const [totalPages, setTotalPages] = React.useState(0);
   const [page, setPage] = React.useState(1);
   let [todos, setTodos] = React.useState<HomeTodo[]>([]);
+  // verificando se existem mais paginas
+  const hasMorePages = totalPages > page;
 // useEffect pra impedir que ele execute esse bloco toda vez que a home for renderizada
 React.useEffect(() => {
   todoController
   .get({ page })
-  .then(({ todos }) => {
-    setTodos(todos);
+  .then(({ todos, pages }) => {
+    setTodos((oldTodos) => {
+      return [ ...oldTodos, ...todos]
+    });
+    setTotalPages(pages);
   });
-}, []);
+}, [page]);
 
   return (
     <main>
@@ -101,7 +107,7 @@ React.useEffect(() => {
                  </td>
                </tr> */}
  
-               <tr>
+                {hasMorePages && (<tr>
                  <td colSpan={4} align="center" style={{ textAlign: "center" }}>
                    <button
                      data-type="load-more"
@@ -119,7 +125,7 @@ React.useEffect(() => {
                      </span>
                    </button>
                  </td>
-               </tr>
+               </tr>)}
           </tbody>
         </table>
       </section>

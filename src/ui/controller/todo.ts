@@ -1,14 +1,13 @@
 import { todoRepository } from "@ui/repository/todo";
 
 interface TodoControllerGetParams {
-  page?: number;
+  page: number;
 }
 
-async function get({ page }: TodoControllerGetParams = {}) {
+async function get(params: TodoControllerGetParams) {
   return todoRepository.get({
-    // te dou o numero da pagina ou a pagina 1
-    page: page || 1,
-    limit: 10,
+    page: params.page,
+    limit: 1,
   });
 }
 
